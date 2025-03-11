@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chuyển đổi tiền tệ</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Amount</th>
+            <th>From currency</th>
+            <th>To currency</th>
+        </tr>
+        <tr>
+            <td><input type="number" id="tiente" placeholder="nhap so tien"></td>
+            <td><select id="form">
+                <option value="VND">VND</option>
+                <option value="USD">USD</option>
+            </select></td>
+            <td>
+               <select id="to">
+                   <option value="USD">USD</option>
+                   <option value="VND">VND</option>
+               </select>
+            </td>
+            <td>
+                <button onclick="chuyentien()">Xac nhan</button>
+            </td>
+        </tr>
+    </table>
+    <p id="result"></p>
+<script>
+    function chuyentien() {
+        money = document.getElementById("tiente").value;
+        let a = document.getElementById("form").value;
+        let n = document.getElementById("to").value;
+        if (a == 'VND') {
+            if (n == 'VND') {
+                result = money;
+            }else{
+                result = money/23000;
+            }
+        }else{
+            if (n == 'USD'){
+            result = money;
+            }else{
+                result = money * 23000;
+            }
+        }
+        document.getElementById("result").innerHTML = "result = " + result;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caculator</title>
+</head>
+<body>
+<input type="number" id="sothunhat">
+<input type="number" id="sothuhai"><br><br>
+<button onclick="cong()">+</button>
+<button onclick="tru()">-</button><br><br>
+<p id="result"></p>
+<script>
+  function cong() {
+    let so1 = document.getElementById("sothunhat").value;
+    let so2 = document.getElementById("sothuhai").value;
+    somot = parseInt(so1);
+    sohai= parseInt(so2);
+    result = somot + sohai;
+    document.getElementById("result").innerHTML = "result: " + result;
+  }
+  function tru() {
+    let so1 = document.getElementById("sothunhat").value;
+    let so2 = document.getElementById("sothuhai").value;
+    somot = parseInt(so1);
+    sohai= parseInt(so2);
+    result = somot - sohai;
+    document.getElementById("result").innerHTML = "result: " + result;
+  }
+</script>
+</body>
+</html>
