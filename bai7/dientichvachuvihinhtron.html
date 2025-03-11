@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dien tich va chu vi hinh tron</title>
+</head>
+<body>
+<input type="number" id="bankinh" placeholder="Nhap ban kinh">
+<button onclick="hinhtron()">Xac nhan</button>
+<p id="s"></p>
+<p id="v"></p>
+</body>
+<script>
+    function hinhtron() {
+    let r = document.getElementById('bankinh').value;
+    s = r * r * 3.14159;
+    v = r * 3.14159 * 2;
+    document.getElementById("s").innerHTML = "s = " + s;
+    document.getElementById("v").innerHTML = "v = " + v;
+    }
+  // let bankinh
+  // bankinh = prompt("Ban kinh =");
+  // let R = parseFloat(bankinh);
+  // S = R * R * 3.14159;
+  // V = 2 * 3.14159 * R;
+  // document.write("Dien tich = " + S + "<br>");
+  // document.write("Chu vi = " + V);
+</script>
+</html>

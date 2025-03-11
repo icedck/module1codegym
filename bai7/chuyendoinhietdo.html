@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chuyen doi nhiet do</title>
+</head>
+<body>
+<input type="number" id="nhietdo" placeholder="nhap nhiet do">
+<button type="button" onclick="nhietdo()">Xac nhan</button>
+<p id="dof"></p>
+<script>
+  function nhietdo() {
+    doc = document.getElementById("nhietdo").value;
+  let dof = (doc * 9 / 5) + 32;
+    document.getElementById("dof").innerHTML = "Do F = " + dof;
+  }
+</script>
+</body>
+</html>

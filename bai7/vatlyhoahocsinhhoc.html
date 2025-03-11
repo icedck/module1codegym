@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hiển thị điểm trung bình và tổng</title>
+</head>
+<body>
+<script>
+  let vatly
+  let hoahoc
+  let sinhhoc
+  vatly = prompt("Nhap diem mon vat ly: ");
+  hoahoc = prompt("Nhap diem mon hoa hoc: ");
+  sinhhoc = prompt("Nhap diem mon sinh hoc: ");
+  let diemly = parseFloat(vatly);
+  let diemhoa = parseFloat(hoahoc);
+  let diemsinh = parseFloat(sinhhoc);
+  dtb = (diemly + diemhoa + diemsinh) / 3;
+  tong = diemly + diemhoa + diemsinh;
+  document.write("Diem trung binh = " + dtb + "<br>");
+  document.write("Diem tong = " + tong);
+</script>
+</body>
+</html>
