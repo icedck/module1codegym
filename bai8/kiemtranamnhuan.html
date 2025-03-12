@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>kiem tra nam nhuan</title>
+</head>
+<body>
+<input type="number" id="year" placeholder="nhap nam">
+<button onclick="kiemtra()">Xac nhan</button>
+<p id="nam"></p>
+</body>
+<script>
+  function kiemtra() {
+    let year = document.getElementById('year').value;
+    year = parseInt(year);
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 != 0)) {
+        document.getElementById('nam').innerHTML = year + ":năm này là năm nhuận";
+    } else {
+      document.getElementById('nam').innerHTML = year + ":năm này ko phải là năm nhuận";
+    }
+  }
+</script>
+</html>
