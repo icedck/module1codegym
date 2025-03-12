@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tính chỉ số cân nặng của cơ thể</title>
+</head>
+<body>
+<h1>Tính chỉ số cân nặng của cơ thể</h1>
+<label>Nhap can nang: (kg)</label>
+<input type="number" id="weight"><br><br>
+<label>Nhap chieu cao: (m)</label>
+<input type="number" id="height"><br><br>
+<button onclick="kiemtra()">Xac nhan</button><br><br>
+<p id="chiso"></p>
+</body>
+<script>
+  function kiemtra() {
+    let weight = parseFloat(document.getElementById('weight').value);
+    let height = parseFloat(document.getElementById('height').value);
+    BMI = weight / (height^2);
+    if (BMI < 18.5) {
+      document.getElementById('chiso').innerHTML = "Chi so BMI la " + BMI + " .Ban theu can";
+    }else if (BMI < 25) {
+      document.getElementById('chiso').innerHTML = "Chi so BMI la " + BMI + " .Ban binh thuong";
+    }else if (BMI < 30) {
+      document.getElementById('chiso').innerHTML = "Chi so BMI la " + BMI + " .Ban thua can";
+    }else{
+      document.getElementById('chiso').innerHTML = "Chi so BMI la " + BMI + " .Ban bi beo phi";
+    }
+  }
+</script>
+</html>

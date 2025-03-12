@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  let x = prompt("Nhap luong thang nay cua ban");
+  x = parseFloat(x);
+  if(x<=5000000){
+    y = x * 5 /100;
+  }else if(x<=10000000){
+    y = x * 10 /100;
+  }else if(x<=18000000){
+    y = x * 15 /100;
+  }else if(x<=32000000){
+    y = x * 20 /100;
+  }else if(x<=52000000){
+    y = x * 25 /100;
+  }else if(x<=80000000){
+    y = x * 30 /100;
+  }else{
+    y = x * 35 /100;
+  }
+  alert("Thue thu nhap ca nhan cua ban la " + y);
+</script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+<script>
+  let diemkt = prompt("diem bai kiem tra : ");
+  let diemgk = prompt("diem thi giua ki : ");
+  let diemck = prompt("diem thi cuoi ki : ");
+  diemkt = parseFloat(diemkt);
+  diemgk = parseFloat(diemgk);
+  diemck = parseFloat(diemck);
+  diemtb = (diemkt + diemgk + diemck) / 3;
+  if (diemtb >= 8.5) {
+    alert("Hoc sinh gioi");
+  }else if (diemtb >= 6.5) {
+    alert("Hoc sinh kha");
+  }else if (diemtb >= 4.5) {
+    alert("Hoc sinh trung binh");
+  }else if (diemtb >= 3.5) {
+    alert("Hoc sinh yeu");
+  }else {
+    alert("Hoc sinh kem");
+  }
+</script>
+</html>

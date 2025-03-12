@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Do you love me</title>
+</head>
+<body>
+<h1>Do you love me?</h1>
+<button onclick="alert('<3')" style="position: absolute">yes</button>
+<button id="btno" onmouseover="over()" style="position: absolute; left: 60px">no</button>
+</body>
+<script>
+  function over() {
+    let x = Math.round(Math.random() * window.innerWidth);    //Sử dụng hàm Math.random() để sinh ra các số ngẫu nhiên
+    let y = Math.round(Math.random() * window.innerHeight);   //Sử dụng các thuộc tính window.innerHeight và window.innerWidth để lấy chiều cao và chiều rộng của trình duyệt
+    document.getElementById("btno").style.left = x + "px";
+    document.getElementById("btno").style.top = y + "px";
+  }
+</script>
+</html>

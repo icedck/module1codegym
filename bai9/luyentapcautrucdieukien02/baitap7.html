@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+<script>
+  let a = prompt("a = ");
+  let b = prompt("b = ");
+  let c = prompt("c = ");
+  a = parseFloat(a);
+  b = parseFloat(b);
+  c = parseFloat(c);
+  delta = (b*b)-(4*a*c);
+  if (a == 0) {
+    if (b == 0) {
+      if (c == 0) {
+        alert("phuong trinh vo so nghiem");
+      }else
+        alert("phuong trinh vo nghiem");
+    }else{
+      x = -c/b;
+      alert("phuong trinh co nghiem la " + x);
+    }
+  }else{
+    if (delta > 0){
+      x1=(-b+Math.sqrt(delta))/(2*a);        //Math.sqrt() : căn bậc 2
+      x2=(-b-Math.sqrt(delta))/(2*a);
+      alert("phuong trinh co 2 nghiem phan biet la " + x1 + "&" + x2);
+    }else if(delta = 0){
+      x = -b/(2*a);
+      alert("phuong trinh co nghiem kep la " + x);
+    }else{
+      alert("phuong trinh vo nghiem");
+    }
+  }
+
+</script>
+</html>
