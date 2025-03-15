@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>so nguyen to</title>
+</head>
+<body>
+
+</body>
+<script>
+    function songuyento(num){
+        let count = 0;
+        let countsnt = 0;
+        for (let i = 1; i <= num; i++) {
+            if(countsnt<num){
+                for (let j = 1; j <= i; j++) {
+                    if(i%j==0){
+                     count = count + 1;
+                    }
+                }
+                if (count==2){
+                    document.write(i + "<br>");
+                    countsnt = countsnt + 1;
+                }
+                count = 0;
+            }
+            else{
+                break
+            }
+        }
+    }
+    let num = +prompt("Nhap n so nguyen to");
+    songuyento(num);
+</script>
+</html>

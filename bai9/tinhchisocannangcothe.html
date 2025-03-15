@@ -17,16 +17,18 @@
   function kiemtra() {
     let weight = parseFloat(document.getElementById('weight').value);
     let height = parseFloat(document.getElementById('height').value);
-    BMI = weight / (height^2);
+    BMI = weight / (height**2);
+    let ketqua;
     if (BMI < 18.5) {
-      document.getElementById('chiso').innerHTML = "Chi so BMI la " + BMI + " .Ban theu can";
+        ketqua = "Chi so BMI la " + BMI + ". Ban theu can";
     }else if (BMI < 25) {
-      document.getElementById('chiso').innerHTML = "Chi so BMI la " + BMI + " .Ban binh thuong";
+        ketqua = "Chi so BMI la " + BMI + ". Ban binh thuong";
     }else if (BMI < 30) {
-      document.getElementById('chiso').innerHTML = "Chi so BMI la " + BMI + " .Ban thua can";
+        ketqua = "Chi so BMI la " + BMI + ". Ban thua can";
     }else{
-      document.getElementById('chiso').innerHTML = "Chi so BMI la " + BMI + " .Ban bi beo phi";
+        ketqua = "Chi so BMI la " + BMI + ". Ban bi beo phi";
     }
+    document.getElementById("chiso").innerHTML = ketqua;
   }
 </script>
 </html>
