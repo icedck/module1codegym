@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo và thao tác với mảng</title>
+</head>
+<body>
+<input type="text" id="phantu">
+<button onclick="them()">Add</button>
+<button onclick="hienthi()">Display</button>
+<div id="ketqua"></div>
+</body>
+<script>
+  let x = 0;
+  let array = Array();
+  function them(){
+    array[x]=document.getElementById("phantu").value;
+    alert("phan tu " + array[x] + " duoc them vao index " + x);
+    x++;
+    document.getElementById("phantu ").value = "";
+  }
+  function hienthi(){
+    let y = "<hr>";
+    for(let i = 0; i < array.length; i++){
+      y += "Phan tu " + i + " = " + array[i] + "<br>";
+    }
+    document.getElementById("ketqua").innerHTML = y;
+  }
+</script>
+</html>

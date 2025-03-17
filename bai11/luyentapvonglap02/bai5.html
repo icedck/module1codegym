@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tinh lai ngan hang</title>
+</head>
+<body>
+</body>
+<script>
+do {
+    let x = prompt("so tien goc");
+    let y = prompt("so lai suat");
+    let z = prompt("so ky");
+  if(x>=0||y>=0||z>=0){
+    x = parseFloat(x);
+    y = parseFloat(y);
+    z = parseFloat(z);
+    tienlai = x * (1+y/100) ** z - x;
+    alert("so tien lai la " + tienlai);
+  }
+}while (x<0||y<0||z<0);
+</script>
+</html>

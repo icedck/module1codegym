@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tính giai thừa của một số nguyên dương</title>
+</head>
+<body>
+</body>
+<script>
+  let n = +prompt("nhap so nguyen duong");
+  let tich = 1;
+  if (n>0){
+    for (let i = 1; i <= n; i++){
+      tich = tich * i;
+    }
+    console.log(`giai thua cua so ${n} la ${tich}`);
+  }else {
+    console.log("day ko phai la so nguyen duong");
+  }
+</script>
+</html>

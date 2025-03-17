@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game đoán số</title>
+</head>
+<body>
+<button onclick="doanxem()">Bat dau</button>
+</body>
+<script>
+function doanxem(){
+  let num = +prompt("so ban muon doan trong khoan lon nhat la bao nhieu");
+  let num_random = Math.floor(Math.random()*num);
+  console.log(num_random);
+  let num_doan = +prompt("so ban doan");
+  let count = 0;
+  while(num_doan !== num_random){
+    count++;
+    if (count == 4) {
+      alert("ban da het so lan doan")
+      break;
+    } else if (num_doan < num_random) {
+      alert("so ban doan be hon");
+    } else {
+      alert ("so ban doan lon hon")
+    }
+    num_doan = prompt ("so ban doan");
+  }
+  if (count == 4) {
+   document.write("ban da het so lan doan");
+  }else {
+    document.write("ban da doan dung");
+  }
+}
+</script>
+</html>

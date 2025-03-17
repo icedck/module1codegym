@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>In hình chữ nhật</title>
+</head>
+<body>
+</body>
+<script>
+    function hinhchunhat(width, height) {
+        let x = "*".repeat(width);
+        document.write(x + "<br>");
+        for (let i = 0; i < height-2; i++) {
+            let y = "*" + "&nbsp;".repeat((width-2)*2)+"*";
+            document.write(y + "<br>");
+        }
+        document.write(x + "<br>");
+    }
+    hinhchunhat(21,7);
+</script>
+</html>

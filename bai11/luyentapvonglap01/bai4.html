@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>so dau tien trong day fibonacci chia het cho 5</title>
+</head>
+<body>
+</body>
+<script>
+  let a = 0;
+  let b = 1;
+  let n = +prompt("Nhap n so")
+  for(let i=0;i<n;i++){
+    sum = a + b;
+    a = b;
+    b = sum;
+    if(a%5==0)
+      break;
+  }
+  console.log(a);
+</script>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tìm giá trị trong mảng</title>
+</head>
+<body>
+</body>
+<script>
+  let x = +prompt("Nhap so");
+  let a = [-3, 5, 1, 3, 2, 10];
+  let index = -1;
+  for(let i = 0; i < a.length; i++){
+    if(x==a[i]){
+      index = i;
+    }
+  }
+  if(index > -1){
+    alert("tim thay phan tu nay trong mang");
+  }else {
+    alert("ko tim thay phan tu nay trong mang");
+  }
+</script>
+</html>
