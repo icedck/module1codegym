@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tic tac toe</title>
+</head>
+<body>
+<h3>Caro game simple</h3>
+<p id="carogame"/>
+<input type="button" value="change value" onclick="changevalue()">
+</body>
+<script>
+  let b = document.getElementById("carogame");
+
+  let board = [];
+  let data = "";
+  let count = 1;
+  for (let i = 0; i < 5; i++) {
+    board[i] = new Array("(.)","(.)","(.)","(.)","(.)");
+  }
+
+  for (let i = 0; i < 5; i++) {
+    data += "<br>";
+    for (let j = 0; j < 5; j++) {
+      data += board[i][j] + "&nbsp;&nbsp;";
+    }
+  }
+
+  data += "<br><br><input type='button' value='change value' onclick='changevalue()'>"
+  b.innerHTML = data;
+  function changevalue() {
+    let positionx = parseInt(prompt("X: "));
+    let positiony = parseInt(prompt("Y: "));
+    data = "";
+    if (positionx >= 0 && positionx <= 5 && positiony >= 0 && positiony <= 5) {
+        if (board[positionx][positiony] == "(.)") {
+            if (count % 2 == 0 ){
+                board[positionx][positiony] = "x";
+            }else{
+                board[positionx][positiony] = "o";
+            }
+            count ++;
+        }else {
+            alert("o nay da duoc danh");
+        }
+    }else {
+        alert("o nay ko danh duoc");
+    }
+      for (let i = 0; i < 5; i++) {
+        data += "<br>";
+        for (let j = 0; j < 5; j++) {
+          data += board[i][j] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+        }
+      }
+      data += "<br><br><input type='button' value='change value' onclick='changevalue()'>"
+      b.innerHTML = "<hr>" + data;
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if(board[i][j] === "x" && board[i][j+1] === "x"&&board[i][j+2] === "x" || board[i][j] === "x" && board[i+1][j] === "x" && board[i+2][j] === "x"){
+          alert("x thang");
+        }else if (board[i][j] === "o" && board[i][j+1] === "o"&&board[i][j+2] === "o" || board[i][j] === "o" && board[i+1][j] === "o" && board[i+2][j] === "o"){
+          alert("y thang");
+        }
+      }
+    }
+    }
+</script>
+</html>

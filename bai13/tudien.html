@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label>Nhap tu can tim:</label><br>
+<input type="text" id="tutienganh">
+<button onclick="dich()">Dich</button>
+<p id="ketqua"></p>
+</body>
+<script>
+    let tutienganh = ["hello", "sorry", "bye"];
+    let tutiengviet = ["chao", "xin loi", "tam biet"];
+    function dich(){
+        let englishword = document.getElementById("tutienganh").value.trim().toLowerCase();
+        let ketqua = document.getElementById("ketqua");
+        for(let i=0;i<tutienganh.length;i++){
+            if (tutienganh[i] === englishword){
+                document.getElementById("ketqua").innerHTML = `"${englishword}" trong tieng viet la ${tutiengviet[i]}`;
+                break;
+            }else {
+                document.getElementById("ketqua").innerHTML = "ko tim thay tu nay";
+            }
+        }
+    }
+</script>
+</html>

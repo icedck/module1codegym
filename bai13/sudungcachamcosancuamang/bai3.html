@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    function chuyendoichu(chuoi){
+        let chuoimoi = "";
+        for(let i=0;i<chuoi.length;i++){
+            let kytu = chuoi[i];
+            if(kytu >= "a" && kytu <= "z"){
+                chuoimoi += kytu.toUpperCase();
+            }else if(kytu >= "A" && kytu <= "Z"){
+                chuoimoi += kytu.toLowerCase();
+            }else{
+                chuoimoi += kytu;
+            }
+        }
+        return chuoimoi;
+    }
+    let x = prompt("Nhap chuoi");
+    if(x!==null){
+        let chuoidachuyen = chuyendoichu(x);
+        console.log(chuoidachuyen);
+    }else{
+        console.log("ko co chuoi nao dc nhap");
+    }
+</script>
+</html>
