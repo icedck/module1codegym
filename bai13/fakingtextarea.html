@@ -5,14 +5,35 @@
     <title>Ứng dụng vui Faking Textarea on Typing</title>
 </head>
 <body>
-<h1>Type anthing slowly</h1>
-<form name="b">
-  <textarea rows="10" cols="50" name="txt" autofocus onkeydown="typeTextera()"></textarea>
-</form>
+<center>
+    <h1>Type anthing slowly</h1>
+    <form name="b">
+        <textarea rows="10" cols="50" name="txt" onkeydown="typeTextera()"></textarea>
+    </form>
+</center>
 </body>
 <script>
-let a = new Array();
-a[0]= "T"; a[1]="O"; a[2]="I"; a[3]=" "; a[4]="D"; a[5]="E"; a[6]="O";a[7]=" "; a[8]="N"; a[9]="O"; a[10]="I";a[11]=" ";a[12]="G"; a[13]="I";a[14]="!";
-x = "";
+    let a = " TOI DEO BIET NOI GI !"
+    let x = a.split("");
+    console.log(x);
+// let a = new Array();
+// a[1]= "T"; a[2]="O"; a[3]="I"; a[4]=" "; a[5]="D"; a[6]="E"; a[7]="O";a[8]=" "; a[9]="N"; a[10]="O"; a[11]="I";a[12]=" ";a[13]="G"; a[14]="I";a[15]="!";
+    n="";
+    function typeTextera() {
+        t = document.b.txt.value;
+        y = t.length;
+        if (y>0){
+            for (let i = 1; i <= y; i++) {
+                n += x[i];
+                if (i==x.length){
+                    document.b.txt.value = "";
+                    n="";
+                }
+            }
+        }
+        document.b.txt.value = n;
+        n="";
+        setTimeout("typeTextera()", 1);
+    }
 </script>
 </html>

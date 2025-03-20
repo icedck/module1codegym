@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+<script>
+  let x = +prompt("Nhap so ");
+  let a = [1,10,-2.3,11,-3,12,-4,-18,5,-14];
+  let found = false;
+  for(let i=0;i<a.length;i++){
+    if ( x == a[i]){
+      found = true;
+    }
+  }
+  if (found==true){
+    document.write(x + " la so nam trong mang");
+  }else{
+    document.write(x + " la so ko nam trong mang");
+  }
+</script>
+</html>

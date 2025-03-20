@@ -13,17 +13,25 @@
 <script>
     let tutienganh = ["hello", "sorry", "bye"];
     let tutiengviet = ["chao", "xin loi", "tam biet"];
-    function dich(){
+    let found = false;
+    function dich() {
         let englishword = document.getElementById("tutienganh").value.trim().toLowerCase();
         let ketqua = document.getElementById("ketqua");
-        for(let i=0;i<tutienganh.length;i++){
-            if (tutienganh[i] === englishword){
+        for (let i = 0; i < tutienganh.length; i++) {
+            if (tutienganh[i] === englishword) {
                 document.getElementById("ketqua").innerHTML = `"${englishword}" trong tieng viet la ${tutiengviet[i]}`;
+                found = true;
                 break;
-            }else {
-                document.getElementById("ketqua").innerHTML = "ko tim thay tu nay";
+                }else {
+                    document.getElementById("ketqua").innerHTML = "ko tim thay tu nay";
+                }
             }
         }
-    }
+        // if (found == true) {
+        //     document.getElementById("ketqua").innerHTML = `"${englishword}" trong tieng viet la ${tutiengviet[i]}`;
+        // } else {
+        //     document.getElementById("ketqua").innerHTML = "ko tim thay tu nay";
+        // }
+
 </script>
 </html>
