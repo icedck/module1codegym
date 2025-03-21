@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="input" oninput="kiemtra()"/> <span id="ketqua"></span>
+</body>
+<script>
+  function songuyen(num) {
+    if (num>0 && Number.isInteger(num)) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+  function kiemtra() {
+    var input = +document.getElementById('input').value;
+    let check = songuyen(input);
+    let ketqua;
+    if (check) {
+      ketqua = `${input} la so nguyen duong`;
+    }else {
+      ketqua = `${input} ko phai so nguyen duong`;
+    }
+    document.getElementById("ketqua").innerHTML = ketqua;
+  }
+</script>
+</html>

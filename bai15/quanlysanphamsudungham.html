@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f0f2f5;
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #ds {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      min-height: 100px;
+      line-height: 1.6;
+    }
+
+    .button-group {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    button:nth-child(1) {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    button:nth-child(2) {
+      background-color: #FFA500;
+      color: white;
+    }
+
+    button:nth-child(3) {
+      background-color: #ff4444;
+      color: white;
+    }
+
+    button:nth-child(1):hover {
+      background-color: #45a049;
+    }
+
+    button:nth-child(2):hover {
+      background-color: #e59400;
+    }
+
+    button:nth-child(3):hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+<h2>Các sản phẩm: </h2>
+<p id="ds"><br></p>
+<div class="button-group">
+  <button type="button" onclick="add(matHang)">Thêm</button>
+  <button type="button" onclick="edit(matHang)">Sửa</button>
+  <button type="button" onclick="xoa(matHang)">Xóa</button>
+</div>
+
+
+<script>
+  var matHang = ['Sữa', 'Đường', 'Bánh', 'Kem', 'Kẹo'];
+  function hienThi(matHang) {
+    var s="";
+    for (var i=0;i<matHang.length;i++){
+      s=s+(i+1)+". "+matHang[i]+"<br>";
+    }
+    return s;
+  }
+
+  function add(matHang) {
+    var newMatHang = prompt("Nhập mặt hàng muốn thêm: ");
+    matHang.push(newMatHang);
+    document.getElementById("ds").innerHTML = hienThi(matHang);
+  }
+
+  function edit(matHang) {
+    var index = prompt("Nhập số thứ tự muốn sửa: ");
+    var newMatHang = prompt("Nhập tên mặt hàng thay thế: ");
+    matHang[index-1] = newMatHang;
+    document.getElementById("ds").innerHTML = hienThi(matHang);
+  }
+
+  function xoa(matHang) {
+    var index = prompt("Nhập số thứ tự muốn xóa: ");
+    matHang.splice(index-1,1);
+    document.getElementById("ds").innerHTML = hienThi(matHang);
+  }
+  document.getElementById("ds").innerHTML = hienThi(matHang);
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+<script>
+  let feet = +prompt("nhap so feet");
+  let met = +prompt("nhap so met");
+  feetToMetter(feet);
+  meterToFeet(met);
+  function feetToMetter(feet){
+    let metter = feet * 0.305;
+    console.log(`${feet} feet = ${metter} met`);
+  }
+  function meterToFeet(met){
+    let feetter = met * 3.279;
+    console.log(`${met} met = ${feetter} feet`);
+  }
+</script>
+</html>

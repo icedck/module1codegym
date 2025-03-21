@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Ban kinh <input type="number" id="input" oninput="caculate()"/>
+<p id="chuvi"></p>
+<p id="dientich"></p>
+</body>
+<script>
+  function cvhinhtron(num){
+    let result = num * 2 * 3.14;
+    return result;
+  }
+  function dthinhtron(num){
+    let result1 = num ** 2 * 3.14;
+    return result1;
+  }
+  function caculate() {
+    let input = document.getElementById("input").value;
+    let result = cvhinhtron(input);
+    document.getElementById("chuvi").innerHTML = result;
+    let result1 = dthinhtron(input);
+    document.getElementById("dientich").innerHTML = result1;
+  }
+</script>
+</html>

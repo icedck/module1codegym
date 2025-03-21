@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="a">
+<button onclick="getResult()">Check</button>
+<p id="result"></p>
+</body>
+<script>
+    // tra ve chuoi
+    // function isPrime2(number){
+    //     if (number<=1) return `${number} khong phai snt`;
+    //     if (number<=3) return `${number} la snt`;
+    //     if (number>=4) {
+    //         let check=true;
+    //         for (let i = 2; i <=Math.sqrt(number) ; i++) {
+    //             if (number % i == 0) {
+    //                 check=false;
+    //                 break;
+    //             }
+    //         }
+    //         if (check) {
+    //             return `${number} la snt`;
+    //         }
+    //         else return `${number} khong la snt`;
+    //     };
+    // }
+    // function getResult2() {
+    //     let a = +document.getElementById("a").value;
+    //     let result = isPrime2(a);
+    //     document.getElementById("result").innerHTML = result;
+    // }
+    // dem so nguyen to trong mang
+    // in ra nhung so nguyen to <100
+    function isPrime(number) {
+        if (number<=1)return false;
+        if (number<4) return true;
+        if (number>=4){
+            for (let i = 2; i <=Math.sqrt(number) ; i++) {
+                if (number % i == 0){
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    // let x = [22, 3, 4, 2, 1, 13];
+    // let count =0;
+    // for (let i = 0; i < x.length; i++) {
+    //     if (isPrime(x[i]))
+    //         count++;
+    //
+    // }
+    // console.log(count);
+
+    // for (let i = 1; i < 15; i++) {
+    //     if (isPrime(i)) console.log(i);
+    // }
+    function getResult() {
+        let a = +document.getElementById("a").value;
+        let checkPrime = isPrime(a);
+        let result ;
+        if(checkPrime){
+            result = `${a} la so nguyen to`;
+        }
+        else {
+            result = `${a} khong la so nguyen to`;
+        }
+        document.getElementById("result").innerHTML = result;
+    }
+</script>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="input" oninput="kiemtra()"/> <span id="ketqua"></span>
+</body>
+<script>
+  function kituso(txt) {
+    if (!isNaN(parseFloat(txt))) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+  function kiemtra() {
+    let input = document.getElementById("input").value;
+    let check = kituso(input);
+    let result ;
+    if (check) {
+      result = `${input} la ky tu so`;
+    }else {
+      result = `${input} ko phai ky tu so`;
+    }
+    document.getElementById("ketqua").innerHTML = result;
+  }
+</script>
+</html>

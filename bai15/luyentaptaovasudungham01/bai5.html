@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <label>Nhap tu can tim:</label><br>
+  <input type="text" id="tenngoisao">
+  <button onclick="chuyendoi()">Dich</button>
+  <p id="ketqua"></p>
+</body>
+<script>
+    let ngoisao = ["polaris", "aldebaran", "deneb", "vega", "altair", "rubhe", "regulus"];
+    let chomsao = ["ursa minor", "taurus", "cygnus", "lyra", "aquila", "ursa major", "leo"];
+    let found = -1;
+    function swap(sao) {
+        for (let i = 0; i < ngoisao.length; i++) {
+            if (ngoisao[i] == sao) {
+                found = i;
+            }
+        }
+        if (found != -1) {
+            return `"${sao}" trong tieng viet la "${chomsao[found]}"`;
+        } else {
+            return "Ko co trong chom sao";
+        }
+    }
+    function chuyendoi() {
+        let tenngoisao = document.getElementById("tenngoisao").value.trim().toLowerCase();
+        let chuyen = swap(tenngoisao);
+        document.getElementById("ketqua").innerHTML = chuyen;
+    }
+</script>
+</html>
