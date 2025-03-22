@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #f0f2f5;
+      font-family: sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4; /* Màu nền nhạt */
     }
 
     h2 {
@@ -18,102 +16,137 @@
       margin-bottom: 20px;
     }
 
-    #ds {
-      background-color: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      min-height: 100px;
-      line-height: 1.6;
-    }
-
-    .button-group {
-      margin-top: 20px;
-      text-align: center;
+    input[type="text"] {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
     }
 
     button {
       padding: 10px 20px;
-      margin: 0 10px;
+      background-color: #007bff; /* Màu xanh dương */
+      color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
-      font-size: 16px;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
     }
 
     button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      background-color: #0056b3; /* Màu xanh dương đậm hơn khi hover */
     }
 
-    button:nth-child(1) {
-      background-color: #4CAF50;
-      color: white;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
     }
 
-    button:nth-child(2) {
-      background-color: #FFA500;
-      color: white;
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      text-align: left;
     }
 
-    button:nth-child(3) {
-      background-color: #ff4444;
-      color: white;
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
     }
 
-    button:nth-child(1):hover {
-      background-color: #45a049;
+    tr:nth-child(even) {
+      background-color: #f9f9f9; /* Màu nền khác cho hàng chẵn */
     }
 
-    button:nth-child(2):hover {
-      background-color: #e59400;
+    /* Các button Edit và Delete trong bảng */
+    table button {
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 3px;
+      margin: 2px;
     }
 
-    button:nth-child(3):hover {
-      background-color: #cc0000;
+    table button:nth-child(1) {
+      background-color: #28a745; /* Màu xanh lá cây cho Edit */
+    }
+
+    table button:nth-child(1):hover {
+      background-color: #218838;
+    }
+
+    table button:nth-child(2) {
+      background-color: #dc3545; /* Màu đỏ cho Delete */
+    }
+
+    table button:nth-child(2):hover {
+      background-color: #c82333;
     }
   </style>
 </head>
 <body>
-<h2>Các sản phẩm: </h2>
-<p id="ds"><br></p>
-<div class="button-group">
-  <button type="button" onclick="add(matHang)">Thêm</button>
-  <button type="button" onclick="edit(matHang)">Sửa</button>
-  <button type="button" onclick="xoa(matHang)">Xóa</button>
-</div>
+<h2>Display all product</h2>
+<input type="text" placeholder="product name" id="name" /><button onclick="addnewproduct()">ADD</button>
+<p id = "slsp"></p>
+<table border="1px">
+  <tr>
+    <th>Name</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  <tbody id="products">
 
-
-<script>
-  var matHang = ['Sữa', 'Đường', 'Bánh', 'Kem', 'Kẹo'];
-  function hienThi(matHang) {
-    var s="";
-    for (var i=0;i<matHang.length;i++){
-      s=s+(i+1)+". "+matHang[i]+"<br>";
-    }
-    return s;
-  }
-
-  function add(matHang) {
-    var newMatHang = prompt("Nhập mặt hàng muốn thêm: ");
-    matHang.push(newMatHang);
-    document.getElementById("ds").innerHTML = hienThi(matHang);
-  }
-
-  function edit(matHang) {
-    var index = prompt("Nhập số thứ tự muốn sửa: ");
-    var newMatHang = prompt("Nhập tên mặt hàng thay thế: ");
-    matHang[index-1] = newMatHang;
-    document.getElementById("ds").innerHTML = hienThi(matHang);
-  }
-
-  function xoa(matHang) {
-    var index = prompt("Nhập số thứ tự muốn xóa: ");
-    matHang.splice(index-1,1);
-    document.getElementById("ds").innerHTML = hienThi(matHang);
-  }
-  document.getElementById("ds").innerHTML = hienThi(matHang);
-</script>
+  </tbody>
+</table>
 </body>
+<script>
+  let products = ["kem","keo","banh","snack"];
+  function showAllproducts() {
+    let sanpham = "";
+    let count = 0;
+    for (let i = 0; i < products.length; i++) {
+      sanpham += `<tr>
+      <td>${products[i]}</td>
+      <td><button onclick="editproduct(${i})">Edit</button></td>
+      <td><button onclick="deleteproduct(${i})">Delete</button></td>
+      </tr>`
+      count++;
+    }
+    document.getElementById("slsp").innerHTML = `so luong san pham ${count}`;
+    document.getElementById("products").innerHTML = sanpham;
+
+  }
+
+  showAllproducts();
+  function addnewproduct() {
+    let newproduct = document.getElementById("name").value;
+    for (let i = 0; i < products.length; i++) {
+      if (products[i] == newproduct) {
+        alert("San pham nay da co roi");
+        break;
+      }else {
+        products.push(newproduct);
+        alert("San pham da duoc them");
+        break;
+      }
+    }
+    showAllproducts();
+  }
+  function editproduct(index) {
+    let suasanpham = prompt("sua san pham", products[index]);
+    if (suasanpham === "") {
+      return;
+    }else{
+      products[index] = suasanpham;
+      alert("Sua thanh cong");
+    }
+    showAllproducts();
+  }
+
+  function deleteproduct(index) {
+    products.splice(index,1);
+    showAllproducts();
+  }
+</script>
 </html>

@@ -8,15 +8,22 @@
 
 </body>
 <script>
-  function getResult(a,b,c) {
-      let tb = (a + b + c)/3;
-      let result = "";
-      if (tb > 4) {
-          result = "dat";
-      }else{
-          result = "ko dat";
-      }
-      return result;
-  }
+    // bien tham chieu
+    let a = [2, 3, 3];
+    let b = a;
+    b[2]=100;
+    // bien tham tri
+    let x=10;
+    let y=x;
+
+    function tang1(x){
+        x=x+100;
+        return x;
+    }
+
+
+    function tang2(arr){
+        arr[0]=arr[0]+100;
+    }
 </script>
 </html>
