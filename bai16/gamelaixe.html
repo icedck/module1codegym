@@ -2,65 +2,205 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Đua Xe Tránh Chướng Ngại Vật</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body{
+        body {
             display: grid;
             place-items: center;
             height: 100vh;
+            overflow: hidden;
+            background-color: #333;
         }
-        .road{
+        .road {
             width: 450px;
             height: 100vh;
-            border: 2px solid red;
-            background-image: url(img_1.png);
+            border: 5px dashed yellow;
+            background-image: url('img_1.png');
             background-size: cover;
             background-repeat: repeat-y;
             background-position: 50% 50%;
-            animation: roadmove 4s infinite linear;
+            animation: roadmove 1s infinite linear;
+            position: relative;
+            overflow: hidden;
         }
         @keyframes roadmove {
-            0%{background-position: 0 0;}
-            100%{background-position: 0 100vh;}
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100vh; }
         }
-        #car{
-            width: 100px;
+        #car {
+            width: 60px;
+            height: auto; /* Để chiều cao tự động theo tỷ lệ ảnh */
+            position: absolute;
+            bottom: 20px;
+            left: calc(50% - 30px);
+            z-index: 1;
+        }
+        .obstacle {
+            width: 40px;
+            height: 60px;
+            background-color: red;
+            position: absolute;
+            top: -60px;
+            border-radius: 5px;
+        }
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 24px;
+            display: none;
+        }
+        .game-over button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 <div class="road">
-    <img src="img.png" id="car">
+    <img src="car.png" id="car">
 </div>
-</body>
+<div class="game-over" id="gameOverScreen">
+    <h1>Game Over</h1>
+    <p>Bạn đã đâm vào chướng ngại vật!</p>
+    <button onclick="restartGame()">Chơi Lại</button>
+</div>
+
 <script>
-    let move=10;
-    let car=document.getElementById('car');
-    window.onload=()=>{
-        car.style.position='absolute';
-        car.style.top=0;
-        car.style.left=0;
+    let move = 15;
+    let car = document.getElementById('car');
+    let road = document.querySelector('.road');
+    let gameOverScreen = document.getElementById('gameOverScreen');
+    let gameInterval;
+    let obstacleInterval;
+    let obstacles = [];
+    let isGameOver = false;
+
+    function startGame() {
+        isGameOver = false;
+        car.style.bottom = '20px';
+        car.style.left = 'calc(50% - 30px)';
+        car.style.top = ''; // Reset top
+        gameOverScreen.style.display = 'none';
+        obstacles.forEach(obstacle => obstacle.remove());
+        obstacles = [];
+
+        obstacleInterval = setInterval(createObstacle, 1500);
+        gameInterval = setInterval(checkCollision, 50);
     }
-    window.onkeydown=(e)=>{
-        switch (e.key){
-            case"ArrowUp":
-                car.style.top=parseInt(car.style.top)-move+"px";
+
+    window.onload = startGame;
+
+    window.onkeydown = (e) => {
+        if (!isGameOver) {
+            let currentLeft = parseInt(car.style.left) || 0;
+            let currentTop = parseInt(car.style.top) || 0;
+            let carWidth = car.offsetWidth;
+            let carHeight = car.offsetHeight;
+            let roadWidth = road.offsetWidth;
+            let roadHeight = road.offsetHeight;
+
+            switch (e.key) {
+                case "ArrowUp":
+                    if (currentTop - move >= 0) {
+                        car.style.top = currentTop - move + "px";
+                        car.style.bottom = ''; // Xóa bottom khi di chuyển lên
+                    }
+                    break;
+                case "ArrowDown":
+                    if (currentTop + move <= roadHeight - carHeight) {
+                        car.style.top = currentTop + move + "px";
+                        car.style.bottom = ''; // Xóa bottom khi di chuyển xuống
+                    }
+                    break;
+                case "ArrowLeft":
+                    if (currentLeft - move >= 0) {
+                        car.style.left = currentLeft - move + "px";
+                    }
+                    break;
+                case "ArrowRight":
+                    if (currentLeft + move <= roadWidth - carWidth) {
+                        car.style.left = currentLeft + move + "px";
+                    }
+                    break;
+            }
+        }
+    };
+
+    function createObstacle() {
+        if (isGameOver) return;
+
+        const obstacle = document.createElement('div');
+        obstacle.classList.add('obstacle');
+        const obstacleWidth = obstacle.offsetWidth;
+        const roadWidth = road.offsetWidth;
+        const randomX = Math.random() * (roadWidth - obstacleWidth);
+        obstacle.style.left = `${randomX}px`;
+        obstacle.style.top = `-60px`; // Bắt đầu từ trên
+        road.appendChild(obstacle);
+        obstacles.push(obstacle);
+
+        let obstacleTop = -obstacle.offsetHeight;
+        const obstacleSpeed = 5;
+
+        function moveObstacle() {
+            if (isGameOver) return;
+            obstacleTop += obstacleSpeed;
+            obstacle.style.top = `${obstacleTop}px`;
+
+            if (obstacleTop > road.offsetHeight) {
+                obstacle.remove();
+                obstacles = obstacles.filter(obs => obs !== obstacle);
+            } else {
+                requestAnimationFrame(moveObstacle);
+            }
+        }
+
+        moveObstacle();
+    }
+
+    function checkCollision() {
+        if (isGameOver) return;
+
+        const carRect = car.getBoundingClientRect();
+
+        for (let i = 0; i < obstacles.length; i++) {
+            const obstacleRect = obstacles[i].getBoundingClientRect();
+
+            if (
+                carRect.left < obstacleRect.right &&
+                carRect.right > obstacleRect.left &&
+                carRect.top < obstacleRect.bottom &&
+                carRect.bottom > obstacleRect.top
+            ) {
+                gameOver();
                 break;
-            case"ArrowDown":
-                car.style.top=parseInt(car.style.top)+move+"px";
-                break;
-            case"ArrowLeft":
-                car.style.left=parseInt(car.style.left)-move+"px";
-                break;
-            case"ArrowRight":
-                car.style.left=parseInt(car.style.left)+move+"px";
-                break;
+            }
         }
     }
+
+    function gameOver() {
+        isGameOver = true;
+        clearInterval(gameInterval);
+        clearInterval(obstacleInterval);
+        gameOverScreen.style.display = 'block';
+    }
+
+    function restartGame() {
+        startGame();
+    }
 </script>
+</body>
 </html>
