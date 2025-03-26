@@ -20,20 +20,29 @@
     this.getYear = function(){
       return this.year;
     }
-    this.setDay = function(){
-      this.day = day;
-    }
-    this.setMonth = function(){
-      this.month = month;
-    }
-    this.setYear = function(){
-      this.year = year;
-    }
+    // this.setDay = function(){
+    //   this.day = day;
+    // }
+    // this.setMonth = function(){
+    //   this.month = month;
+    // }
+    // this.setYear = function(){
+    //   this.year = year;
+    // }
+      this.setDate = function(day, month, year){
+        this.day = day;
+        this.month = month;
+        this.year = year;
+      }
+      this.toString = function(){
+        return `${this.day}/${this.month}/${this.year}`;
+      }
   };
   let date = new mydate(21,3,2025);
-  let day = date.getDay();
-  let month = date.getMonth();
-  let year = date.getYear();
-  alert(day + "/" + month + "/" + year);
+  date.setDate(24,3,2025);
+  // let day = date.getDay();
+  // let month = date.getMonth();
+  // let year = date.getYear();
+  alert(date.toString());
 </script>
 </html>

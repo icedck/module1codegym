@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    class Mobile{
+        constructor(){
+            this.pin=100;
+            this.draftMessage = "";
+            this.inbox = [];
+            this.sentMessage = [];
+            this.status = false
+        }
+        checkstatus(){
+            return this.status;
+        }
+        turnon(){
+            this.status = true;
+            console.log('Da bat dien thoai');
+        }
+        turnoff(){
+            this.status = false;
+            console.log('Da tat dien thoai');
+        }
+        chargePin(){
+            if (this.status){
+                this.pin = 100;
+                console.log("da sac day pin");
+            }else{
+                console.log("ko the sac pin khi tat");
+            }
+        }
+        soanMessage(message){
+            if (this.status){
+                this.draftMessage = message;
+                this.pin --;
+                console.log("Da soan tin nhan");
+            }else{
+                console.log("dien thoai chua bat");
+            }
+        }
+        guiMessage(dienthoai){
+            if (this.status){
+                if (this.draftMessage){
+                    dienthoai.receiveMessage(this.draftMessage);
+                    this.sentMessage.push(this.draftMessage);
+                    this.draftMessage = "";
+                    this.pin--;
+                    console.log("da gui tin nhan");
+                }else{
+                    console.log("ko co tin nhan de gui");
+                }
+            }else{
+                console.log("dien thoai chua bat");
+            }
+        }
+        receiveMessage(message){
+            this.inbox.push(message);
+            this.pin--;
+        }
+        viewInbox(){
+            if (this.status){
+                if (this.inbox.length > 0){
+                    console.log("hop thu den:");
+                    this.inbox.forEach(message => console.log(message));
+                }else{
+                    console.log("hop thu den trong");
+                }
+                this.pin--;
+            }else{
+                console.log("dien thoai chua bat");
+            }
+        }
+        viewSentMessage(){
+            if (this.status){
+                if (this.sentMessage.length > 0){
+                    console.log("tin nhan da gui:");
+                    this.sentMessage.forEach(message => console.log(message));
+                }else{
+                    console.log("khong co tin nhan da gui");
+                }
+                this.pin--;
+            }else{
+                console.log("dien thoai chua bat");
+            }
+        }
+    }
+    const nokia = new Mobile();
+    const iphone = new Mobile();
+
+    nokia.turnon();
+    iphone.turnon();
+
+    nokia.soanMessage("chao iphone, day la nokia");
+    nokia.guiMessage(iphone);
+
+    iphone.viewInbox();
+    nokia.viewSentMessage();
+</script>
+</html>

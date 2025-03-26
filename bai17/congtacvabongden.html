@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  class bongDen{
+    constructor(){
+      this.isOn=false;
+    }
+    setState(state){
+      this.isOn = state;
+      this.displayState();
+    }
+    displayState(){
+      console.log(`Bong den hien dang: ${this.isOn ? 'on' : 'off'}`);
+    }
+  }
+  class congTac{
+    constructor(){
+      this.isOn=false;
+      this.ketnoi = null;
+    }
+    ketNoiBongDen(device){
+      this.ketnoi = device;
+    }
+    turnOn(){
+      this.isOn = true;
+      if (this.ketnoi){
+        this.ketnoi.setState(true);
+      }
+    }
+    turnOff(){
+      this.isOn = false;
+      if (this.ketnoi){
+        this.ketnoi.setState(false);
+      }
+    }
+    toggle(){
+      if (this.isOn){
+        this.turnOff();
+      }else{
+        this.turnOn();
+      }
+    }
+  }
+  let congtac = new congTac();
+  let bongden = new bongDen();
+  congtac.ketNoiBongDen(bongden);
+  for (let i = 0; i <=10; i++) {
+    console.log(`lan ${i}:`);
+    congtac.toggle();
+    console.log(`-------------`);
+  }
+</script>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hero Movement</title>
+  <style>
+    body { margin: 0; }
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #cat {
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+<div id="game">
+  <img id="cat" src="img.png" width="100" height="100" style="top: 20px; left: 30px;">
+</div>
+
+<script>
+  class Cat {
+    constructor(image, top, left, size, speed) {
+      this.image = image;
+      this.top = top;
+      this.left = left;
+      this.size = size;
+      this.speed = speed;
+      this.element = document.getElementById('cat');
+      this.element.src = this.image;
+      this.element.style.width = `${this.size}px`;
+      this.element.style.height = `${this.size}px`;
+      this.updatePosition();
+    }
+
+    moveRight() {
+      this.left += this.speed;
+      this.updatePosition();
+      console.log('Right: ', this.left);
+    }
+
+    moveLeft() {
+      this.left -= this.speed;
+      this.updatePosition();
+      console.log('Left: ', this.left);
+    }
+
+    moveUp() {
+      this.top -= this.speed;
+      this.updatePosition();
+      console.log('Up: ', this.top);
+    }
+
+    moveDown() {
+      this.top += this.speed;
+      this.updatePosition();
+      console.log('Down: ', this.top);
+    }
+
+    updatePosition() {
+      this.element.style.top = `${this.top}px`;
+      this.element.style.left = `${this.left}px`;
+    }
+  }
+
+  class Game {
+    constructor() {
+      this.cat = new Cat('img.png', 20, 30, 100, 20);
+      this.initEventListeners();
+    }
+
+    initEventListeners() {
+      document.addEventListener('keydown', (event) => {
+        switch (event.key) {
+          case 'ArrowLeft':
+            this.cat.moveLeft();
+            break;
+          case 'ArrowRight':
+            this.cat.moveRight();
+            break;
+          case 'ArrowUp':
+            this.cat.moveUp();
+            break;
+          case 'ArrowDown':
+            this.cat.moveDown();
+            break;
+        }
+      });
+    }
+
+  }
+
+  const game = new Game();
+</script>
+
+</body>
+</html>

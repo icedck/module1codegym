@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  class Mouse {
+    status;
+    sound_mouse;
+    constructor(name, weight, speed) {
+      this.name_mouse = name;
+      this.weight_mouse = weight;
+      this.speed_mouse = speed;
+
+    }
+
+    getStatus() {
+      if (this.status) {
+        console.log("Chuột sống");
+      } else {
+        console.log("Chuột chết");
+      }
+    }
+
+    Die() {
+      return this.status = false;
+    }
+
+    noDie() {
+      return this.status = true;
+    }
+
+    actionMouse(sound) {
+      this.sound_mouse = sound;
+      console.log(`Con chuot ten ${this.name_mouse} keu ${this.sound_mouse}`);
+    }
+
+  }
+
+
+  class Cat {
+    sound_cat;
+    constructor(name, weight, speed, mouse) {
+      this.name_cat = name;
+      this.weight_cat = weight;
+      this.speed_cat = speed;
+      this.mouse = mouse;
+    }
+
+    getWeightCat() {
+      return this.weight_cat;
+    }
+
+    setSoundCat(sound_cat) {
+      this.sound_cat = sound_cat;
+    }
+
+    getSoundCat() {
+      console.log(this.sound_cat);
+    }
+
+    actionCat(sound) {
+      this.sound_cat = sound;
+      console.log(`Con meo ${this.name_cat} keu ${this.sound_cat}`);
+    }
+
+    catchTheMouse() {
+      if (this.mouse.speed_mouse < this.speed_cat) {
+        console.log(`Mèo ${this.name_cat} đã bắt được chuột ${this.mouse.name_mouse}`);
+      } else {
+        console.log(`Mèo ${this.name_cat} không bắt được chuột ${this.mouse.name_mouse}`);
+      }
+    }
+
+    eatTheMouse() {
+      if (this.mouse.status) {
+        this.weight_cat = this.weight_cat +  this.mouse.weight_mouse;
+        this.mouse.status = false;
+        console.log(`${this.mouse.name_mouse} da bi ${this.name_cat} an`);
+      }
+    }
+
+  }
+
+  let Rat = new Mouse("Rat", 10, 100);
+  let Tom = new Cat("Tom", 20, 200, Rat);
+
+  Rat.actionMouse("chit chit")
+  Tom.actionCat("meo meo")
+  Rat.noDie()
+
+  Tom.catchTheMouse();
+  Tom.eatTheMouse();
+
+  console.log(`Can nang cua ${Tom.name_cat}: ${Tom.weight_cat}`);
+</script>
+</html>

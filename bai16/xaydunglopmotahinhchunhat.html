@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas" width="200" height="100"></canvas>
+</body>
+<script>
+  // let Hcn = function (dai, rong){
+  //   this.dai = dai;
+  //   this.rong = rong;
+  //   this.getDai = function(){
+  //     return this.dai;
+  //   }
+  //   this.getRong = function(){
+  //     return this.rong;
+  //   }
+  //   this.getDientich = function(){
+  //     return dai*rong;
+  //   }
+  //   this.getChuvi = function(){
+  //     return (dai+rong)/2;
+  //   }
+  // }
+  //
+  // let hcn = new Hcn(120, 100);
+  // let dai = hcn.getDai();
+  // let rong = hcn.getRong();
+  // let dientich = hcn.getDientich();
+  // let chuvi = hcn.getChuvi();
+  // alert(`dai = ${dai}, rong = ${rong}, dien tich = ${dientich}, chu vi = ${chuvi}`);
+
+  class Hcn{
+      height;
+      width;
+      constructor(width,height) {
+          this.height = height;
+          this.width = width;
+      }
+      tinhDienTich(){
+          return this.height*this.width;
+      }
+      tinhChuVi(){
+          return (this.height+this.width)*2;
+      }
+  }
+  let soCuaKhanh = new Hcn(100,200);
+  console.log(`height = ${soCuaKhanh.height}, width = ${soCuaKhanh.width}, dien tich = ${soCuaKhanh.tinhDienTich()}, chu vi = ${soCuaKhanh.tinhChuVi()}`);
+
+  function veHcn(){
+    let canvas = document.getElementById("myCanvas").getContext("2d");
+    canvas.fillStyle = "red";
+    canvas.fillRect(0,0,soCuaKhanh.height,soCuaKhanh.width);
+  }
+  veHcn();
+</script>
+</html>

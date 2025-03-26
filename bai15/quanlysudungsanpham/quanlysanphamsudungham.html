@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4; /* Màu nền nhạt */
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Input và Button ADD */
+    input[type="text"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 5px;
+      width: 150px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff; /* Màu xanh dương */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3; /* Màu xanh đậm khi hover */
+    }
+
+    /* Đoạn số lượng sản phẩm */
+    #slsp {
+      text-align: center;
+      color: #555;
+      font-size: 16px;
+      margin: 15px 0;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff; /* Màu xanh dương cho header */
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9; /* Màu nền nhạt cho hàng chẵn */
+    }
+
+    tr:hover {
+      background-color: #f1f1f1; /* Hiệu ứng hover cho hàng */
+    }
+
+    /* Button Edit và Delete trong bảng */
+    table button {
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    table button:nth-child(1) { /* Edit */
+      background-color: #28a745; /* Màu xanh lá */
+    }
+
+    table button:nth-child(1):hover {
+      background-color: #218838; /* Xanh lá đậm khi hover */
+    }
+
+    table button:nth-child(2) { /* Delete */
+      background-color: #dc3545; /* Màu đỏ */
+    }
+
+    table button:nth-child(2):hover {
+      background-color: #c82333; /* Đỏ đậm khi hover */
+    }
+  </style>
+</head>
+<body>
+<h2>Display all product</h2>
+<input placeholder="id" id="id"/>
+<input placeholder="name" id="name"/>
+<input placeholder="price" id="price"/>
+<input placeholder="number" id="number"/><button onclick="addnewproduct()">ADD</button>
+<p id = "slsp"></p>
+<table border="1px">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Number</th>
+    <th>Amount</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  <tbody id="products">
+
+  </tbody>
+</table>
+</body>
+<script src ="product.js"></script>
+<script>
+  let products = [
+          new Product("01","kem",4000,100),
+          new Product("02","keo",1000,200),
+          new Product("03","snack",5000,50)
+  ];
+  function showAllproducts() {
+    let sanpham = "";
+    let count = 0;
+    for (let i = 0; i < products.length; i++) {
+      sanpham += `<tr>
+      <td>${products[i].id}</td>
+      <td>${products[i].name}</td>
+      <td>${products[i].price}</td>
+      <td>${products[i].number}</td>
+      <td>${products[i].getAmount()}</td>
+      <td><button onclick="editproduct(${i})">Edit</button></td>
+      <td><button onclick="deleteproduct(${i})">Delete</button></td>
+      </tr>`
+      count++;
+    }
+    document.getElementById("slsp").innerHTML = `so luong san pham ${count}`;
+    document.getElementById("products").innerHTML = sanpham;
+
+  }
+
+  showAllproducts();
+
+  function addnewproduct() {
+    let name = document.getElementById("name").value;
+    let id = document.getElementById("id").value;
+    let price = +document.getElementById("price").value;
+    let number = +document.getElementById("number").value;
+    let newproduct = new Product(id, name, price, number);
+    for (let i = 0; i < products.length; i++) {
+      if (products[i] == newproduct) {
+        alert("San pham nay da co roi");
+        break;
+      }else {
+        products.push(newproduct);
+        alert("San pham da duoc them");
+        break;
+      }
+    }
+    showAllproducts();
+  }
+
+  function editproduct(index) {
+    let suasanpham = products[index];
+    let sanphammoi = prompt("Sua san pham (theo dinh dang: id,name,price,number)", `${suasanpham.id}, ${suasanpham.name}, ${suasanpham.price}, ${suasanpham.number}`);
+    if (sanphammoi === null || sanphammoi === "") {
+      return;
+    }
+    let [newID, newName, newPrice, newNumber] = sanphammoi.split(",");
+    if (!newID||newName||isNaN(newPrice),isNaN(newNumber)) {
+      alert("vui long nhap dung dinh dang: id,name,price,number");
+      return;
+    }
+    products[index].id = new Product(newID, newName, +newPrice, +newNumber);
+    alert("Sua thanh cong")
+
+    showAllproducts();
+  }
+
+  function deleteproduct(index) {
+    products.splice(index,1);
+    showAllproducts();
+  }
+</script>
+</html>

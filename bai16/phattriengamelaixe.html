@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Driving Game</title>
+    <style>
+        .hide { display: none; }
+        .car, .enemy {
+            position: absolute;
+            bottom: 100px;
+            margin: auto;
+            width: 50px;
+            height: 100px;
+            background-color: white;
+            background-image: url(car.png);
+            background-size: cover;
+        }
+        .gameArea {
+            background-color: black;
+            width: 400px;
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            margin: auto;
+            left: 35%;
+        }
+        .line {
+            position: absolute;
+            height: 100px;
+            width: 10px;
+            margin-left: 195px;
+            background-color: white;
+        }
+        .score {
+            background-color: black;
+            height: 70px;
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            font-family: fantasy;
+        }
+        .startScreen {
+            text-align: center;
+            border: 1px solid red;
+            padding: 15px;
+            margin: auto;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="score"></div>
+<div class="game">
+    <div class="startScreen">
+        Press here to Start<br />Arrow keys to move<br />If you hit a another car you will lose.
+    </div>
+    <div class="gameArea"></div>
+</div>
+<script>
+    class Player {
+        constructor() {
+            this.speed = 5;
+            this.score = 0;
+            this.x = 0;
+            this.y = 0;
+            this.start = false;
+        }
+    }
+
+    class GameArea {
+        constructor(element) {
+            this.element = element;
+            this.rect = this.element.getBoundingClientRect();
+        }
+
+        clear() {
+            this.element.innerHTML = '';
+        }
+
+        append(child) {
+            this.element.appendChild(child);
+        }
+    }
+
+    class Car {
+        constructor(className, gameArea) {
+            this.element = document.createElement('div');
+            this.element.className = className;
+            gameArea.append(this.element);
+            this.rect = this.element.getBoundingClientRect();
+        }
+
+        move(x, y) {
+            this.element.style.left = x + 'px';
+            this.element.style.top = y + 'px';
+            this.rect = this.element.getBoundingClientRect();
+        }
+    }
+
+    class RoadLine {
+        constructor(gameArea, y) {
+            this.element = document.createElement('div');
+            this.element.className = 'line';
+            this.y = y;
+            this.element.style.top = y + 'px';
+            gameArea.append(this.element);
+        }
+
+        move(speed) {
+            if (this.y > 1500) {
+                this.y -= 1500;
+            }
+            this.y += speed;
+            this.element.style.top = this.y + 'px';
+        }
+    }
+
+    class Game {
+        constructor() {
+            this.scoreElement = document.querySelector('.score');
+            this.startScreen = document.querySelector('.startScreen');
+            this.gameArea = new GameArea(document.querySelector('.gameArea'));
+            this.player = new Player();
+            this.keys = {
+                ArrowUp: false,
+                ArrowDown: false,
+                ArrowRight: false,
+                ArrowLeft: false
+            };
+            this.lines = [];
+            this.enemies = [];
+
+            this.startScreen.addEventListener('click', () => this.start());
+            document.addEventListener('keydown', (e) => this.pressOn(e));
+            document.addEventListener('keyup', (e) => this.pressOff(e));
+        }
+
+        pressOn(e) {
+            e.preventDefault();
+            this.keys[e.key] = true;
+        }
+
+        pressOff(e) {
+            e.preventDefault();
+            this.keys[e.key] = false;
+        }
+
+        isCollide(a, b) {
+            return !(
+                a.rect.bottom < b.rect.top ||
+                a.rect.top > b.rect.bottom ||
+                a.rect.right < b.rect.left ||
+                a.rect.left > b.rect.right
+            );
+        }
+
+        randomColor() {
+            const c = () => ('0' + Math.floor(Math.random() * 256).toString(16)).substr(-2);
+            return '#' + c() + c() + c();
+        }
+
+        start() {
+            this.startScreen.classList.add('hide');
+            this.gameArea.clear();
+            this.player.start = true;
+            this.player.score = 0;
+
+            // Create road lines
+            this.lines = Array(10).fill().map((_, i) => new RoadLine(this.gameArea, i * 150));
+
+            // Create player car
+            this.car = new Car('car', this.gameArea);
+            this.player.x = this.car.element.offsetLeft;
+            this.player.y = this.car.element.offsetTop;
+
+            // Create enemy cars
+            this.enemies = Array(3).fill().map((_, i) => {
+                const enemy = new Car('enemy', this.gameArea);
+                enemy.y = (i + 1) * 600 * -1;
+                enemy.move(Math.floor(Math.random() * 350), enemy.y);
+                enemy.element.style.backgroundColor = this.randomColor();
+                return enemy;
+            });
+
+            this.play();
+        }
+
+        play() {
+            if (!this.player.start) return;
+
+            // Move lines
+            this.lines.forEach(line => line.move(this.player.speed));
+
+            // Move enemies
+            this.enemies.forEach(enemy => {
+                if (this.isCollide(this.car, enemy)) {
+                    this.endGame();
+                    return;
+                }
+                if (enemy.y > 1500) {
+                    enemy.y = -600;
+                    enemy.move(Math.floor(Math.random() * 350), enemy.y);
+                }
+                enemy.y += this.player.speed;
+                enemy.move(enemy.element.offsetLeft, enemy.y);
+            });
+
+            // Move player car
+            if (this.keys.ArrowUp && this.player.y > this.gameArea.rect.top - 542) {
+                this.player.y -= this.player.speed;
+            }
+            if (this.keys.ArrowDown && this.player.y < this.gameArea.rect.bottom - 237) {
+                this.player.y += this.player.speed;
+            }
+            if (this.keys.ArrowLeft && this.player.x > 0) {
+                this.player.x -= this.player.speed;
+            }
+            if (this.keys.ArrowRight && this.player.x < this.gameArea.rect.width - 54) {
+                this.player.x += this.player.speed;
+            }
+            this.car.move(this.player.x, this.player.y);
+
+            // Update score
+            this.player.score++;
+            this.scoreElement.innerText = 'Score: ' + this.player.score;
+
+            window.requestAnimationFrame(() => this.play());
+        }
+
+        endGame() {
+            this.player.start = false;
+            this.scoreElement.innerHTML = 'Game Over<br>Score was ' + this.player.score;
+            this.startScreen.classList.remove('hide');
+        }
+    }
+
+    const game = new Game();
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  class Apple{
+    constructor(){
+      this.miengTao = 10;
+    }
+    get checkTao(){
+      return this.miengTao;
+    }
+    khiBiAn(){
+      if(this.miengTao>0){
+        this.miengTao -= 1;
+        return true;
+      }else{
+        return false;
+      }
+    }
+  }
+  class Human{
+    constructor(name,gender,weight) {
+      this._name = name;
+      this._gender = gender;
+      this._weight = weight;
+    }
+    get name(){
+      return this._name;
+    }
+    get gender(){
+      return this._gender;
+    }
+    get weight(){
+      return this._weight;
+    }
+    speak(word){
+      console.log(`${this._name} noi: "${word}"`);
+    }
+    anApple(apple){
+      if(apple.checkTao){
+        if (apple.khiBiAn()){
+          this._weight += 1;
+          console.log(`${this._name} da an 1 mieng tao`);
+          console.log(`can nang moi cua ${this._name}: ${this._weight}`);
+          console.log(`Khoi luong con lai cua qua tao ${apple.checkTao}`);
+          return true;
+        }
+      }else {
+        console.log(`${this._name} ko the an vi tao da het`);
+        return false;
+      }
+    }
+    checkMiengTao(apple){
+      console.log(`${this._name} kiem tra: Khoi luong con lai cua qua tao ${apple.checkTao}`);
+    }
+  }
+  let apple = new Apple();
+  let adam =new Human("Adam","nam",70);
+  let eva = new Human("Eva","nu",55);
+  console.log("Bat dau an tao");
+  adam.checkMiengTao(apple);
+  eva.checkMiengTao(apple);
+
+  let turn = 0;
+  while(apple.checkTao>0){
+    if(turn%2===0){
+      adam.anApple(apple);
+    }else{
+      eva.anApple(apple);
+    }
+    turn++;
+  }
+
+  console.log("Da an het tao");
+  adam.checkMiengTao(apple);
+  eva.checkMiengTao(apple);
+  console.log(`Can nang cuoi cung cua Adam: ${adam._weight}`);
+  console.log(`Can nang cuoi cua Eva: ${eva._weight}`);
+</script>
+</html>

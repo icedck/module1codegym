@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  let temperature = function(doC){
+    this.doC = doC;
+    this.getdoC = function(){
+      return this.doC;
+    }
+    this.getdoF = function(){
+      return doC * 1.8 + 32;
+    }
+    this.getdoK = function(){
+      return doC + 273;
+    }
+  }
+  let nhietdo = new temperature(25);
+  let doC = nhietdo.getdoC();
+  let doF = nhietdo.getdoF();
+  let doK = nhietdo.getdoK();
+  alert(`Do C = ${doC}, Do F = ${doF}, Do K = ${doK}`);
+</script>
+</html>

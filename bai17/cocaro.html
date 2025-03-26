@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe</title>
+  <style>
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(20, 30px);
+      grid-template-rows: repeat(20, 30px);
+      border: 1px solid black;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .cell.x {
+      color: red;
+    }
+
+    .cell.o {
+      color: blue;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #reset-button {
+      margin-top: 10px;
+      padding: 8px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="game-container">
+  <div id="board"></div>
+  <div id="message">Lượt của người chơi X</div>
+  <button id="reset-button">Chơi lại</button>
+</div>
+
+<script>
+  class Board {
+    constructor(size) {
+      this.size = size;
+      this.cells = Array(size).fill(null).map(() => Array(size).fill(null));
+    }
+
+    setCell(row, col, value) {
+      this.cells[row][col] = value;
+    }
+
+    getCell(row, col) {
+      return this.cells[row][col];
+    }
+
+    reset() {
+      this.cells = Array(this.size).fill(null).map(() => Array(this.size).fill(null));
+    }
+  }
+
+  class Game {
+    constructor(boardSize) {
+      this.boardSize = boardSize;
+      this.board = new Board(boardSize);
+      this.currentPlayer = 'X';
+      this.gameEnded = false;
+      this.boardElement = document.getElementById('board');
+      this.messageElement = document.getElementById('message');
+      this.resetButton = document.getElementById('reset-button');
+
+      this.initialize();
+    }
+
+    initialize() {
+      this.resetButton.addEventListener('click', () => this.resetGame());
+      this.createBoard();
+    }
+
+    createBoard() {
+      this.boardElement.innerHTML = '';
+      for (let i = 0; i < this.boardSize; i++) {
+        for (let j = 0; j < this.boardSize; j++) {
+          const cell = document.createElement('div');
+          cell.classList.add('cell');
+          cell.dataset.row = i;
+          cell.dataset.col = j;
+          cell.addEventListener('click', (e) => this.handleCellClick(e));
+          this.boardElement.appendChild(cell);
+        }
+      }
+    }
+
+    handleCellClick(event) {
+      if (this.gameEnded) return;
+
+      const cell = event.target;
+      const row = parseInt(cell.dataset.row);
+      const col = parseInt(cell.dataset.col);
+
+      if (this.board.getCell(row, col) === null) {
+        this.board.setCell(row, col, this.currentPlayer);
+        cell.textContent = this.currentPlayer;
+        cell.classList.add(this.currentPlayer.toLowerCase());
+        this.checkWin(row, col);
+        this.switchPlayer();
+      }
+    }
+
+    switchPlayer() {
+      this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+      this.messageElement.textContent = `Lượt của người chơi ${this.currentPlayer}`;
+    }
+
+    checkWin(row, col) {
+      const player = this.board.getCell(row, col);
+      if (!player) return;
+
+      if (this.checkDirection(row, col, player, 0, 1) ||  // Horizontal
+              this.checkDirection(row, col, player, 1, 0) ||  // Vertical
+              this.checkDirection(row, col, player, 1, 1) ||  // Main diagonal
+              this.checkDirection(row, col, player, 1, -1)) { // Anti-diagonal
+        this.endGame(player);
+      }
+    }
+
+    checkDirection(row, col, player, deltaRow, deltaCol) {
+      let count = 1;
+
+      // Check positive direction
+      for (let i = 1; i <= 4; i++) {
+        const r = row + i * deltaRow;
+        const c = col + i * deltaCol;
+        if (this.isValidPosition(r, c) && this.board.getCell(r, c) === player) {
+          count++;
+        } else {
+          break;
+        }
+      }
+
+      // Check negative direction
+      for (let i = 1; i <= 4; i++) {
+        const r = row - i * deltaRow;
+        const c = col - i * deltaCol;
+        if (this.isValidPosition(r, c) && this.board.getCell(r, c) === player) {
+          count++;
+        } else {
+          break;
+        }
+      }
+
+      return count >= 5;
+    }
+
+    isValidPosition(row, col) {
+      return row >= 0 && row < this.boardSize && col >= 0 && col < this.boardSize;
+    }
+
+    endGame(winner) {
+      this.gameEnded = true;
+      this.messageElement.textContent = `Người chơi ${winner} đã chiến thắng!`;
+    }
+
+    resetGame() {
+      this.board.reset();
+      this.currentPlayer = 'X';
+      this.gameEnded = false;
+      this.messageElement.textContent = `Lượt của người chơi ${this.currentPlayer}`;
+      this.createBoard();
+    }
+  }
+
+  // Start the game
+  const game = new Game(20);
+</script>
+</body>
+</html>
