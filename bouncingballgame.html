@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Ball</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        #gameCanvas {
+            border: 1px solid black;
+            background-color: #eee;
+        }
+
+        #gameOverScreen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        #restartButton {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<canvas id="gameCanvas" width="480" height="320"></canvas>
+<div id="gameOverScreen" style="display: none;">
+    <h1>Game Over</h1>
+    <p>Điểm số: <span id="finalScore">0</span></p>
+    <button id="restartButton">Chơi lại</button>
+</div>
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gameOverScreen = document.getElementById('gameOverScreen');
+    const finalScoreDisplay = document.getElementById('finalScore');
+    const restartButton = document.getElementById('restartButton');
+
+    // Đối tượng GameBoard
+    const gameBoard = {
+        width: canvas.width,
+        height: canvas.height
+    };
+
+    // Đối tượng Ball
+    const ball = {
+        radius: 10,
+        x: gameBoard.width / 2,
+        y: gameBoard.height - 50,
+        dx: 2, // Tốc độ di chuyển theo trục x
+        dy: -2, // Tốc độ di chuyển theo trục y
+        draw: function() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+        },
+        move: function() {
+            this.x += this.dx;
+            this.y += this.dy;
+
+            // Va chạm với biên trái và phải
+            if (this.x + this.radius > gameBoard.width || this.x - this.radius < 0) {
+                this.dx = -this.dx;
+            }
+
+            // Va chạm với biên trên
+            if (this.y - this.radius < 0) {
+                this.dy = -this.dy;
+            }
+
+            // Game over khi chạm biên dưới
+            if (this.y + this.radius > gameBoard.height) {
+                gameOver();
+            }
+        }
+    };
+
+    // Đối tượng Bar
+    const bar = {
+        width: 75,
+        height: 10,
+        x: (gameBoard.width - 75) / 2,
+        y: gameBoard.height - 20,
+        speed: 5,
+        draw: function() {
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = "green";
+            ctx.fill();
+            ctx.closePath();
+        },
+        moveLeft: function() {
+            this.x -= this.speed;
+            if (this.x < 0) {
+                this.x = 0;
+            }
+        },
+        moveRight: function() {
+            this.x += this.speed;
+            if (this.x + this.width > gameBoard.width) {
+                this.x = gameBoard.width - this.width;
+            }
+        }
+    };
+
+    let rightPressed = false;
+    let leftPressed = false;
+    let gameInterval;
+    let score = 0;
+    let startTime;
+
+    function collisionDetection() {
+        // Va chạm với thanh đỡ
+        if (ball.y + ball.radius > bar.y &&
+            ball.y - ball.radius < bar.y + bar.height &&
+            ball.x + ball.radius > bar.x &&
+            ball.x - ball.radius < bar.x + bar.width) {
+            ball.dy = -ball.dy;
+
+            // Thay đổi góc bay dựa trên vị trí va chạm với thanh đỡ
+            let collisionPoint = ball.x - (bar.x + bar.width / 2);
+            collisionPoint = collisionPoint / (bar.width / 2);
+            let newAngle = collisionPoint * Math.PI / 3; // Góc tối đa là +/- 60 độ
+
+            ball.dx = ball.dx > 0 ? Math.abs(Math.cos(newAngle) * 2) : -Math.abs(Math.cos(newAngle) * 2);
+            ball.dy = -Math.abs(Math.sin(newAngle) * 2);
+        }
+    }
+
+    function drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Điểm: " + score, 8, 20);
+    }
+
+    function updateScore() {
+        const currentTime = new Date().getTime();
+        score = Math.floor((currentTime - startTime) / 1000); // Tính điểm theo giây
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, gameBoard.width, gameBoard.height);
+        ball.draw();
+        bar.draw();
+        drawScore();
+        ball.move();
+        collisionDetection();
+
+        if (rightPressed) {
+            bar.moveRight();
+        } else if (leftPressed) {
+            bar.moveLeft();
+        }
+    }
+
+    function startGame() {
+        ball.x = gameBoard.width / 2;
+        ball.y = gameBoard.height - 50;
+        ball.dx = 2;
+        ball.dy = -2;
+        bar.x = (gameBoard.width - 75) / 2;
+        score = 0;
+        startTime = new Date().getTime();
+        gameOverScreen.style.display = 'none';
+        gameInterval = setInterval(draw, 10); // Cập nhật khung hình sau mỗi 10ms
+    }
+
+    function gameOver() {
+        clearInterval(gameInterval);
+        finalScoreDisplay.textContent = score;
+        gameOverScreen.style.display = 'block';
+    }
+
+    // Lắng nghe sự kiện bàn phím
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Right" || e.key === "ArrowRight") {
+            rightPressed = true;
+        } else if (e.key === "Left" || e.key === "ArrowLeft") {
+            leftPressed = true;
+        }
+    });
+
+    document.addEventListener("keyup", function(e) {
+        if (e.key === "Right" || e.key === "ArrowRight") {
+            rightPressed = false;
+        } else if (e.key === "Left" || e.key === "ArrowLeft") {
+            leftPressed = false;
+        }
+    });
+
+    // Bắt đầu trò chơi khi trang được tải
+    startGame();
+
+    // Xử lý sự kiện nút chơi lại
+    restartButton.addEventListener('click', startGame);
+</script>
+</body>
+</html>
